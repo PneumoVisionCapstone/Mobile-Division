@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">PneumoVision</string>
     <string name="register">Don\'t have an account? Register</string>
     <string name="signup">Not yet registered? SignUp Now</string>
     <string name="login">Login</string>
@@ -78,4 +78,44 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+
+    <string-array name="data_riders">
+        <item>Alex Marquez</item>
+        <item>Francesco Bagnaia</item>
+        <item>Brad Binder</item>
+        <item>Enea Bastianini</item>
+        <item>Fabio Quartararo</item>
+        <item>Franco Morbidelli</item>
+        <item>Jack Miller</item>
+        <item>Joan Mir</item>
+        <item>Marq Marquez</item>
+        <item>Jorge Martin</item>
+        <item>Johann Zarco</item>
+    </string-array>
+    <string-array name="data_desc">
+        <item>Álex Márquez Alentà (lahir di Cervera, 23 April 1996) adalah seorang pembalap motor Spanyol yang saat ini sedang berkompetisi di kejuaraan MotoGP. Dia memulai karier profesionalnya pada tahun 2012 (Moto3) dan 2014 (Moto2) dan memenangkan gelar juara dunia Moto3 pada periode 2014 dan Moto2 pada tahun 2019. Nomor pembalap yang dia gunakan adalah 73. Alex merupakan adik dari pembalap MotoGP Marc Marquez. </item>
+        <item>Francesco "Pecco" Bagnaia (lahir di Turin, Italia, pada 14 Januari 1997) adalah seorang pembalap berkebangsaan Italia. Saat ini ia berkompetisi di MotoGP bersama Ducati Lenovo Team. Ia adalah Juara Dunia MotoGP musim 2022, 2023 dan sebelumnya menjadi Juara Dunia Moto2 pada tahun 2018.</item>
+        <item>Brad Binder (lahir 11 Agustus 1995) adalah seorang pembalap sepeda motor Grand Prix Afrika Selatan. Pada November 2019, ia dikonfirmasi sebagai pebalap pabrik KTM di kelas MotoGP untuk musim 2020, menggantikan Johann Zarco yang meninggalkan pabrikannya di awal tahun.</item>
+        <item>Enea Bastianini (lahir 30 Desember 1997) adalah pembalap Grand Prix Sepeda Motor yang mengendarai Avintia Esponsorama Racing di MotoGP. Dia memenangkan Moto2 musim 2020.</item>
+        <item>Fabio Quartararo (lahir 20 April 1999) adalah pembalap sepeda motor Grand Prix Prancis yang saat ini membalap di MotoGP untuk Monster Energy Yamaha MotoGP. Sebelum karier Grand Prix-nya, Quartararo memenangkan enam gelar kejuaraan Spanyol, termasuk gelar CEV Moto3 berturut-turut pada 2013 dan 2014. Karena kesuksesannya di usia muda, ia dianggap sebagai "hal-hal besar",[1][2][3] bahkan ia dibandingkan dengan beberapa juara dunia seperti Marc Márquez dan telah memecahkan beberapa rekor selama naik ke level Kejuaraan Dunia. Pada tahun 2021 Fabio Quartararo menjadi juara dunia pertama kalinya dan Prancis pertama kalinya memenangkan kejuaraan papan atas.</item>
+        <item>Franco Morbidelli memulai debut profesionalnya pada ajang European Superstock 600 di musim 2011, dan berhasil menjuarai kejuaraan tersubut di musim 2013 bersama San Carlo Team Italia Kawasaki.[1] Franco sempat mengikuti balapan dengan status wildcard bersama tim Federal Oil Gresini Moto2 di GP San Marino, GP Jepang, dan GP Valencia kejuaraan Moto2 2013.</item>
+        <item>Jack Peter Miller (lahir tanggal 18 Januari 1995 di Townsville, Queensland, Australia) adalah seorang pembalap motor yang berasal dari Australia. ada 2019 Miller kini mengendarai GP19 saat ini setelah Petrucci pindah ke tim pabrikan Ducati. Rekan setim barunya adalah juara Moto2 Francesco Bagnaia. Musim dimulai dengan sangat kuat untuk Miller di Qatar, ia menyelesaikan kualifikasi ke-4, tetapi terpaksa mundur dalam balapan karena kursi patah saat berjuang untuk memimpin. </item>
+        <item>Joan Mir Mayrata (lahir 1 September 1997) adalah seorang Pembalap motor Grand Prix Spanyol. Mir juga pernah menjadi pesaing di Red Bull MotoGP Rookies Cup dan CEV Moto3 Championship.[1] Dia memenangkan Kejuaraan Dunia Moto3 2017 dengan Leopard Racing. Mir menjadi juara dunia MotoGP 2020 Setelah melewati 7 podium dan 1 kemenangan di sepanjang musim 2020.</item>
+        <item>Marc Márquez Alentà (lahir 17 Februari 1993) adalah seorang pembalap Grand Prix Sepeda Motor profesional Spanyol, yang membalap untuk Repsol Honda sejak debutnya di MotoGP pada tahun 2013. Lahir di Cervera, Catalonia, Spanyol, dia dijuluki Ant of Cervera di seluruh dunia (karena tingginya 1,68m), dan el tro de Cervera di kampung halamannya, yang berarti Guntur Cervera. Dia adalah salah satu dari empat pembalap yang memenangkan gelar juara dunia dalam tiga kategori berbeda, setelah Mike Hailwood, Phil Read dan Valentino Rossi, dan merupakan salah satu pembalap motor sepanjang masa yang paling sukses, dengan delapan Kejuaraan Dunia Grand Prix atas namanya, enam di antaranya berada di kelas utama.</item>
+        <item>Jorge Martín Almoguera (lahir 29 Januari 1998) adalah pembalap motor asal Spanyol. Martín merupakan mantan juara Red Bull MotoGP Rookies Cup pada tahun 2014. Saat ini dia berkompetisi di kejuaraan Moto GP.</item>
+        <item>Johann Zarco (lahir 16 Juli 1990) adalah pembalap motor Prancis, yang meraih dua gelar juara dunia Moto2 pada tahun 2015 dan 2016. Mulai musim 2017 dia akan menjalani debutnya di kelas MotoGP bersama tim Monster Yamaha Tech 3. Reale Avintia Ducati</item>
+    </string-array>
+    <integer-array name="data_img">
+        <item>@drawable/alex</item>
+        <item>@drawable/bagnaia</item>
+        <item>@drawable/brad</item>
+        <item>@drawable/enea</item>
+        <item>@drawable/fabio</item>
+        <item>@drawable/franco</item>
+        <item>@drawable/jack</item>
+        <item>@drawable/joan</item>
+        <item>@drawable/marq</item>
+        <item>@drawable/martin</item>
+        <item>@drawable/zarco</item>
+    </integer-array>
 </resources>

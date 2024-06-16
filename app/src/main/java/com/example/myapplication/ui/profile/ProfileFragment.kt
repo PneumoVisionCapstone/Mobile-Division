@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.myapplication.R
 import com.example.myapplication.ViewModelFactory
 import com.example.myapplication.databinding.FragmentProfileBinding
@@ -89,6 +90,7 @@ class ProfileFragment : Fragment() {
                         Log.d(ContentValues.TAG, "Profile image URL: $fullUrl")
                         Glide.with(this@ProfileFragment)
                             .load(fullUrl)
+//                            .transform(CircleCrop())
                             .into(binding.profileImageView)
                     }
                 } else {

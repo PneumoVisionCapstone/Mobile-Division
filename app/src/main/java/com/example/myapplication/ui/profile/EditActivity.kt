@@ -15,6 +15,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.myapplication.R
 import com.example.myapplication.ViewModelFactory
 import com.example.myapplication.preference.UserModel
@@ -25,6 +26,7 @@ import com.example.myapplication.ui.login.LoginActivity
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -103,12 +105,12 @@ class EditActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ProfileResponse>, response: Response<ProfileResponse>) {
                 if (response.isSuccessful) {
                     val profile = response.body()
-//                    binding.tvName.text = profile?.name
-
                     profile?.profilePicture?.let { profileUrl ->
-                        Glide.with(this@EditActivity)
-                            .load(profileUrl)
-                            .into(profileImageView)
+                        if (!isDestroyed && !isFinishing) {
+                            Glide.with(this@EditActivity)
+                                .load(profileUrl)
+                                .into(profileImageView)
+                        }
                     }
                 } else {
                     Log.e(ContentValues.TAG, "Failed to fetch profile: ${response.message()}")
@@ -121,11 +123,13 @@ class EditActivity : AppCompatActivity() {
         })
     }
 
+
     private fun loadImage(imageUrl: String) {
         Glide.with(this)
             .load(imageUrl)
             .placeholder(R.drawable.profile) // Placeholder image
             .error(R.drawable.profile) // Error image
+            .transform(CircleCrop())
             .into(profileImageView)
     }
 
@@ -133,10 +137,7 @@ class EditActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val apiService = ApiConfig.getApiService()
-
-                // Use the current name if the new name is empty
                 val namePart = createPartFromString(name.ifEmpty { viewModel.currentUserName })
-
                 val profileImagePart = profileImageUri?.let { prepareFilePart("profile_picture", it) }
                 val params = mapOf("name" to namePart)
 
@@ -144,15 +145,15 @@ class EditActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val successResponse = response.body()?.message
                     successResponse?.let {
-                        // Assume response message is the new image URL
                         val imageUrl = it
                         showToast("Profile updated successfully")
-                        // Display the new uploaded image
-                        Glide.with(this@EditActivity)
-                            .load(imageUrl)
-                            .into(profileImageView)
+                        if (!isDestroyed && !isFinishing) {
+                            Glide.with(this@EditActivity)
+                                .load(imageUrl)
+//                                .transform(CircleCrop())
+                                .into(profileImageView)
+                        }
                     }
-                    // Update the session with the new name
                     viewModel.saveSession(UserModel(viewModel.currentUserEmail, token, true, name, viewModel.currentUserId))
                     showToast(getString(R.string.success_profile_update))
                     finish()
@@ -170,6 +171,7 @@ class EditActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun createPartFromString(value: String): RequestBody {
         return RequestBody.create("text/plain".toMediaTypeOrNull(), value)
