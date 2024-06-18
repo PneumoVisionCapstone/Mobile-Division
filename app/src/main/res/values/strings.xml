@@ -70,6 +70,13 @@
     <string name="emptyFields">Isikan data dengan benar terlebih dahulu\n</string>
     <string name="upload_xray">upload scan</string>
     <string name="success_profile_update">berhasil update\n</string>
+    <string name="namapasientv">Nama Pasien</string>
+    <string name="usiapasientv">Usia Pasien</string>
+    <string name="kelamin">Kelamin</string>
+    <string name="kelaminpasien">Kelamin Pasien</string>
+    <string name="hasil_klasifikasi">Hasil klasifikasi</string>
+    <string name="hasil_xray">Hasil Xray</string>
+    <string name="hasil">Hasil</string>
 
     <string-array name="data_description">klasifikasi penyakit</string-array>
     <string-array name="data_name">nama penyakit</string-array>

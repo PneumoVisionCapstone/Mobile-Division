@@ -3,12 +3,15 @@ package com.example.myapplication.retrofit
 import com.example.myapplication.response.DetailResponse
 import com.example.myapplication.response.EditProfileResponse
 import com.example.myapplication.response.FileAddResponse
-import com.example.myapplication.response.LoginResponse
+import com.example.myapplication.response.HistoryResponse
+import com.example.myapplication.response.HistoryResponseItem
+
 import com.example.myapplication.response.LoginResponse1
 import com.example.myapplication.response.ProfileResponse
 import com.example.myapplication.response.RegisterResponse
 import com.example.myapplication.response.ScanResponse
 import com.example.myapplication.response.StoryResponse
+import com.example.myapplication.ui.history.ScanHistory
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -99,6 +102,13 @@ interface ApiService {
         @Part("age") age: RequestBody,
         @Part("gender") gender: RequestBody
     ): Call<ScanResponse>
+
+
+
+
+    @GET("predictions")
+    fun getScanHistory(@Header("Authorization") token: String
+    ): Call<List<HistoryResponseItem>>
 
 
 }

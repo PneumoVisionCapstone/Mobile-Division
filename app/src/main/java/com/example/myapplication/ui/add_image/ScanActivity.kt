@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.add_image
 
+
 import android.Manifest
 import android.content.ContentValues
 import android.content.Intent
@@ -24,6 +25,7 @@ import com.example.myapplication.databinding.ActivityScanBinding
 import com.example.myapplication.response.ErrorResponse
 import com.example.myapplication.response.ScanResponse
 import com.example.myapplication.retrofit.ApiConfig
+import com.example.myapplication.ui.detail_scan.DetailActivity
 import com.example.myapplication.ui.main.MainActivity
 import com.example.myapplication.ui.welcome.WelcomeActivity
 import com.example.test.data.util.reduceFileImage
@@ -126,7 +128,7 @@ class ScanActivity : AppCompatActivity() {
     private fun showImage() {
         currentImageUri?.let {
             Log.d("Image URI", "showImage: $it")
-            binding.previewparu.setImageURI(it)
+            binding.itemPhoto.setImageURI(it)
         }
     }
 
@@ -141,8 +143,8 @@ class ScanActivity : AppCompatActivity() {
             val imageFile = uriToFile(uri, this).reduceFileImage()
             Log.d("Image File", "showImage: ${imageFile.path}")
 
-            val name = binding.edNamapasien.text.toString()
-            val age = binding.edAge.text.toString()
+            val name = binding.tvName.text.toString()
+            val age = binding.tvAge.text.toString()
             val gender = binding.spinnerGender.selectedItem.toString()
 
             if (name.isEmpty() || age.isEmpty() || gender.isEmpty()) {
@@ -171,38 +173,51 @@ class ScanActivity : AppCompatActivity() {
                                 Log.e(ContentValues.TAG, "response Success: ${response.message()}")
                                 showToast("Upload Successful")
                                 response.body()?.let { result ->
-                                    displayResult(result.message)
+                                    result.message?.let {
+                                        navigateToDetailActivity(name, age, gender, uri.toString(),
+                                            it
+                                        )
+                                    }
                                 }
                             } else {
                                 val errorBody = response.errorBody()?.string()
-                                val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
-                                showToast(errorResponse.message.toString())
-                                Log.e(ContentValues.TAG, "add response gagal: ${response.message()}")
+                                if (errorBody != null) {
+                                    val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
+                                    showToast(errorResponse.error.message)
+                                    Log.e(ContentValues.TAG, "add response failed: ${errorResponse.error.message}")
+                                }
                             }
                         }
 
                         override fun onFailure(call: Call<ScanResponse>, t: Throwable) {
                             showLoading(false)
-                            Log.e(ContentValues.TAG, "upload gagal: ${t.message.toString()}")
+                            Log.e(ContentValues.TAG, "upload failed: ${t.message.toString()}")
                             showToast("Upload failed: ${t.message.toString()}")
                         }
                     })
                 } catch (e: HttpException) {
                     showLoading(false)
                     val errorBody = e.response()?.errorBody()?.string()
-                    val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
-                    showToast(errorResponse.message.toString())
+                    if (errorBody != null) {
+                        val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
+                        showToast(errorResponse.error.message)
+                    }
                 }
             }
         } ?: showToast(getString(R.string.emptyImage))
     }
 
-    private fun displayResult(result: String?) {
-        result?.let {
-            binding.tvResult.text = it
-            binding.tvResult.visibility = View.VISIBLE
+    private fun navigateToDetailActivity(name: String, age: String, gender: String, imageUri: String, result: String) {
+        val intent = Intent(this, DetailActivity::class.java).apply {
+            putExtra("EXTRA_NAME", name)
+            putExtra("EXTRA_AGE", age)
+            putExtra("EXTRA_GENDER", gender)
+            putExtra("EXTRA_IMAGE_URI", imageUri)
+            putExtra("EXTRA_RESULT", result)
         }
+        startActivity(intent)
     }
+
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

@@ -1,82 +1,60 @@
 package com.example.myapplication.ui.history
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.dicoding.pneumuvision.response.LungsResponse
-import com.example.myapplication.R
-import com.example.myapplication.ui.adapter.ListHistoryAdapter
-import com.example.myapplication.ui.detail.DetailActivity
+import com.example.myapplication.ViewModelFactory
+import com.example.myapplication.databinding.ActivityHistoryBinding
+import com.example.myapplication.retrofit.ApiConfig
+import com.example.myapplication.response.HistoryResponseItem
+import com.example.myapplication.ui.adapter.ScanHistoryAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HistoryActivity : AppCompatActivity() {
 
-    private lateinit var rvRiders: RecyclerView
-    private val list = ArrayList<Riders>()
+    private lateinit var binding: ActivityHistoryBinding
+    private lateinit var adapter: ScanHistoryAdapter
+    private val viewModel by viewModels<HistoryViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
+    private var token: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_history)
+        binding = ActivityHistoryBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        rvRiders = findViewById(R.id.rv_lungs)
-        rvRiders.setHasFixedSize(true)
+        binding.rvLungs.layoutManager = LinearLayoutManager(this)
 
-        list.addAll(getListRiders())
-        showRecyclerList()
-    }
-
-    private fun getListRiders(): ArrayList<Riders> {
-        val dataName = resources.getStringArray(R.array.data_riders)
-        val dataDescription = resources.getStringArray(R.array.data_desc)
-        val dataPhoto = resources.obtainTypedArray(R.array.data_img)
-        val listHero = ArrayList<Riders>()
-        for (i in dataName.indices) {
-            val hero = Riders(dataName[i], dataDescription[i], dataPhoto.getResourceId(i, -1))
-            listHero.add(hero)
+        viewModel.getSession().observe(this) { userModel ->
+            token = userModel.token
+            fetchScanHistory()
         }
-        return listHero
     }
 
-    private fun showRecyclerList() {
-        rvRiders.layoutManager = LinearLayoutManager(this)
-        val listRidersAdapter = ListRidersAdapter(list)
-        rvRiders.adapter = listRidersAdapter
+    private fun fetchScanHistory() {
+        val token = this.token ?: return
+        val client = ApiConfig.getApiService().getScanHistory("Bearer $token")
+        client.enqueue(object : Callback<List<HistoryResponseItem>> {
+            override fun onResponse(call: Call<List<HistoryResponseItem>>, response: Response<List<HistoryResponseItem>>) {
+                if (response.isSuccessful) {
+                    val scanHistoryList = response.body() ?: emptyList()
+                    adapter = ScanHistoryAdapter(scanHistoryList)
+                    binding.rvLungs.adapter = adapter
+                } else {
+                    Toast.makeText(this@HistoryActivity, "Failed to load data", Toast.LENGTH_SHORT).show()
+                }
+            }
 
+            override fun onFailure(call: Call<List<HistoryResponseItem>>, t: Throwable) {
+                Log.e("HistoryActivity", "onFailure: ${t.message}")
+                Toast.makeText(this@HistoryActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
-
 }
-
-
-//    private lateinit var rvLungs: RecyclerView
-//    private val list = ArrayList<LungsResponse>()
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_history)
-//
-//        rvLungs = findViewById(R.id.rv_lungs)
-//        rvLungs.setHasFixedSize(true)
-//
-//        list.addAll(getListAnimal())
-//        showRecyclerList()
-//    }
-//
-//    private fun getListAnimal(): ArrayList<LungsResponse> {
-//        val dataName = resources.getStringArray(R.array.data_name)
-//        val dataDescription = resources.getStringArray(R.array.data_description)
-//        val dataPhoto = resources.obtainTypedArray(R.array.data_photo)
-//        val listAnimal = ArrayList<LungsResponse>()
-//        for (i in dataName.indices) {
-//            val animal = LungsResponse(dataName[i], dataDescription[i], dataPhoto.getResourceId(i, -1))
-//            listAnimal.add(animal)
-//        }
-//        return listAnimal
-//    }
-//
-//    private fun showRecyclerList() {
-//        rvLungs.layoutManager = LinearLayoutManager(this)
-//        val listAnimalAdapter = ListHistoryAdapter(list)
-//        rvLungs.adapter = listAnimalAdapter
-//    }
-//}

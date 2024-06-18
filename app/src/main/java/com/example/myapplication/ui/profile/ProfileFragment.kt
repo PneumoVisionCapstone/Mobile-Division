@@ -90,7 +90,7 @@ class ProfileFragment : Fragment() {
                         Log.d(ContentValues.TAG, "Profile image URL: $fullUrl")
                         Glide.with(this@ProfileFragment)
                             .load(fullUrl)
-//                            .transform(CircleCrop())
+                            .transform(CircleCrop())
                             .into(binding.profileImageView)
                     }
                 } else {

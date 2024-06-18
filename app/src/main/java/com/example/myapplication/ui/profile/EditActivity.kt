@@ -109,6 +109,7 @@ class EditActivity : AppCompatActivity() {
                         if (!isDestroyed && !isFinishing) {
                             Glide.with(this@EditActivity)
                                 .load(profileUrl)
+                                .transform(CircleCrop())
                                 .into(profileImageView)
                         }
                     }
@@ -150,7 +151,7 @@ class EditActivity : AppCompatActivity() {
                         if (!isDestroyed && !isFinishing) {
                             Glide.with(this@EditActivity)
                                 .load(imageUrl)
-//                                .transform(CircleCrop())
+                                .transform(CircleCrop())
                                 .into(profileImageView)
                         }
                     }
